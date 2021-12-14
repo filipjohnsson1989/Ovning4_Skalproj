@@ -236,6 +236,59 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            Stack<char> inputStack = new();
+            char[] openings = new char[] { '(', '[', '{' };
+            char[] closings = new char[] { ')', ']', '}' };
+            bool itIsValid = true;
+
+            string? input = Console.ReadLine();
+            ArgumentNullException.ThrowIfNull(input);
+
+            foreach (char character in input.ToCharArray())
+            {
+                int relevantCharIndex = -1;
+                bool? isItOpening = null;
+
+                relevantCharIndex = Array.IndexOf(openings, character);
+
+                if (relevantCharIndex != -1)
+                {
+                    isItOpening = true;
+                }
+                else
+                {
+                    relevantCharIndex = Array.IndexOf(closings, character);
+                    if (relevantCharIndex != -1)
+                        isItOpening = false;
+                }
+
+                if (isItOpening is not null)
+                {
+                    if (isItOpening.Value) inputStack.Push(character);
+                    else
+                    {
+                        if (inputStack.Count == 0)
+                        {
+                            itIsValid = false;
+                            break;
+                        }
+                        char lastRelevantChar = inputStack.Pop();
+
+                        if (openings[relevantCharIndex] != lastRelevantChar)
+                        {
+                            itIsValid = false;
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+            if (inputStack.Count != 0)
+                itIsValid = false;
+
+
+            Console.WriteLine(itIsValid ? "Valid" : "Invalid");
         }
 
 
