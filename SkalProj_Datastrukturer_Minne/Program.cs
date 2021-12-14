@@ -237,8 +237,8 @@ namespace SkalProj_Datastrukturer_Minne
              */
 
             Stack<char> inputStack = new();
-            char[] openings = new char[] { '(', '[', '{' };
-            char[] closings = new char[] { ')', ']', '}' };
+            char[] openings = new char[] { '(', '[', '{', '<' };
+            char[] closings = new char[] { ')', ']', '}', '>' };
             bool itIsValid = true;
 
             string? input = Console.ReadLine();
