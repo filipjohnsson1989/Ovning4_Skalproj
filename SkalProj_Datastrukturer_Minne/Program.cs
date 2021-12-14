@@ -85,7 +85,7 @@ namespace SkalProj_Datastrukturer_Minne
              */
 
 
-            List<string> theList = new List<string>();
+            List<string> theList = new();
             do
             {
                 string? input = Console.ReadLine();
@@ -110,8 +110,8 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                 }
 
-                Console.WriteLine($"Count: {theList.Count}");
-                Console.WriteLine($"Capacity: {theList.Capacity}");
+                Console.WriteLine($"Listans storlek: {theList.Count}");
+                Console.WriteLine($"Underliggande arrays kapacitet: {theList.Capacity}");
             } while (true);
         }
 
@@ -120,11 +120,36 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineQueue()
         {
-            /*
-             * Loop this method untill the user inputs something to exit to main menue.
-             * Create a switch with cases to enqueue items or dequeue items
-             * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
-            */
+            Queue<string> customersQueue = new();
+            do
+            {
+                string? input = Console.ReadLine();
+                ArgumentNullException.ThrowIfNull(input);
+
+                char nav = input[0];
+                if (nav != '+' && nav != '-')
+                    break;
+
+
+
+                switch (nav)
+                {
+                    case '+':
+                        // ToDo: Fixa acceptabel tom sträng
+                        string value = input.Substring(1);
+                        customersQueue.Enqueue(value);
+                        break;
+                    case '-':
+                        // ToDo: Fixa exception om att ​ta​​ bort ​​element ur​​ kö​​ (​dequeue)​ när kön är tomt.
+                        customersQueue.Dequeue();
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine($"Nummer av kunder i ICA-kön: {customersQueue.Count}");
+                Console.WriteLine($"Kunder i ICA-kön: {String.Join(",", customersQueue)}");
+            } while (true);
         }
 
         /// <summary>
