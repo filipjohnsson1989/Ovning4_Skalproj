@@ -62,22 +62,33 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineList()
         {
-            /*
-             * Loop this method untill the user inputs something to exit to main menue.
-             * Create a switch statement with cases '+' and '-'
-             * '+': Add the rest of the input to the list (The user could write +Adam and "Adam" would be added to the list)
-             * '-': Remove the rest of the input from the list (The user could write -Adam and "Adam" would be removed from the list)
-             * In both cases, look at the count and capacity of the list
-             * As a default case, tell them to use only + or -
-             * Below you can see some inspirational code to begin working.
-            */
+            List<string> theList = new List<string>();
+            do
+            {
+                string? input = Console.ReadLine();
+                ArgumentNullException.ThrowIfNull(input);
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+                char nav = input[0];
+                if (nav != '+' && nav != '-')
+                    break;
 
-            //switch(nav){...}
+                string value = input.Substring(1);
+
+                switch (nav)
+                {
+                    case '+':
+                        theList.Add(value);
+                        break;
+                    case '-':
+                        theList.Remove(value);
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine($"Count: {theList.Count}");
+                Console.WriteLine($"Capacity: {theList.Capacity}");
+            } while (true);
         }
 
         /// <summary>
