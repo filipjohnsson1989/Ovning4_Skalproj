@@ -18,6 +18,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. Reverse a text"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -43,6 +44,9 @@ namespace SkalProj_Datastrukturer_Minne
                     case '4':
                         CheckParanthesis();
                         break;
+                    case '5':
+                        ReverseText();
+                        break;
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
@@ -51,7 +55,7 @@ namespace SkalProj_Datastrukturer_Minne
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
+                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5)");
                         break;
                 }
             }
@@ -62,6 +66,22 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineList()
         {
+            /*
+            * Loop this method untill the user inputs something to exit to main menue.
+            * Create a switch statement with cases '+' and '-'
+            * '+': Add the rest of the input to the list (The user could write +Adam and "Adam" would be added to the list)
+            * '-': Remove the rest of the input from the list (The user could write -Adam and "Adam" would be removed from the list)
+            * In both cases, look at the count and capacity of the list
+            * As a default case, tell them to use only + or -
+            * Below you can see some inspirational code to begin working.
+           */
+
+            //List<string> theList = new List<string>();
+            //string input = Console.ReadLine();
+            //char nav = input[0];
+            //string value = input.substring(1);
+
+            //switch(nav){...}
 
             /*
              *  2. När ​​ökar​​ listans ​​kapacitet?​​ (Alltså ​​den​​ underliggande ​​arrayens ​​storlek)
@@ -120,6 +140,12 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineQueue()
         {
+            /*
+             * Loop this method untill the user inputs something to exit to main menue.
+             * Create a switch with cases to enqueue items or dequeue items
+             * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
+            */
+
             Queue<string> customersQueue = new();
             do
             {
@@ -129,8 +155,6 @@ namespace SkalProj_Datastrukturer_Minne
                 char nav = input[0];
                 if (nav != '+' && nav != '-')
                     break;
-
-
 
                 switch (nav)
                 {
@@ -150,6 +174,7 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine($"Nummer av kunder i ICA-kön: {customersQueue.Count}");
                 Console.WriteLine($"Kunder i ICA-kön: {String.Join(",", customersQueue)}");
             } while (true);
+
         }
 
         /// <summary>
@@ -162,6 +187,45 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            /*
+             * 1.​​​​​​​​​​​​​​​​Simulera ännu ​​en ​​gång ICA-kön​​på​​papper.​​Denna ​​gång​​ med ​​en ​​​stack​.​
+             * Varför ​​är ​​det inte​​ så​​ smart​​ att ​​använda​​ en​​​ stack​​​ i​​ det ​​här​​ fallet?
+             * Eftersom det inte är rättvist.
+             */
+
+            Stack<string> inputStack = new();
+
+            do
+            {
+                string? input = Console.ReadLine();
+                ArgumentNullException.ThrowIfNull(input);
+
+                char nav = input[0];
+                if (nav != '+' && nav != '-')
+                    break;
+
+                switch (nav)
+                {
+                    case '+':
+                        // ToDo: Fixa acceptabel tom sträng
+                        string value = input.Substring(1, 1);
+                        inputStack.Push(value);
+                        break;
+                    case '-':
+                        // ToDo: Fixa exception om att ​ta​​ bort ​​element ur​​ kö​​ (​dequeue)​ när kön är tomt.
+                        inputStack.Pop();
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine($"Nummer av elementer i stacken: {inputStack.Count}");
+                Console.WriteLine($"Elementer i stacken: {String.Join(",", inputStack)}");
+            } while (true);
+
+
+
         }
 
         static void CheckParanthesis()
@@ -172,6 +236,29 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+        }
+
+
+        /// <summary>
+        /// Reverses a text with the datastructure Stack
+        /// </summary>
+        static void ReverseText()
+        {
+            Stack<char> inputStack = new();
+            string result = "";
+
+            string? input = Console.ReadLine();
+            ArgumentNullException.ThrowIfNull(input);
+
+            foreach (char character in input.ToCharArray())
+                inputStack.Push(character);
+
+            foreach (char element in inputStack)
+                result += element;
+
+            GC.Collect();
+
+            Console.WriteLine($"Reversed text: {result}");
         }
 
     }
