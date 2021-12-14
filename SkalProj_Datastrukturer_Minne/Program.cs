@@ -62,6 +62,29 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineList()
         {
+
+            /*
+             *  2. När ​​ökar​​ listans ​​kapacitet?​​ (Alltså ​​den​​ underliggande ​​arrayens ​​storlek)
+             *  Den​​ underliggande ​​arrayens ​​storlek är 4 som standart.
+             *  Det ökar när det inte finns plats till ett nyt värde och arreyen har blivit full av värden.
+                
+             *  3. ​​​​​​​​​​​​​​​​Med​​ hur ​​mycket ​​ökar ​​kapaciteten?
+             *  Det ökar det som dubbla den nuvarande kapaciteten lika 4,8,16, 32....
+             *  
+             *  4. Varför​​ ökar ​​inte ​​listans​​ kapacitet​​ i​​ samma​​ takt​​ som​​ element ​​läggs ​​till?
+             *  Att ökar kapaciteten tar tid och jobb varje gång. Det är en snabbare som undviker att vänta varje gång ännu mindre än en mikrosekund.
+             *  Det går snabbare att komma åt värden av arrayen eftersom de läggs till ett utrymme bredvid varandra i minnet.
+             *  
+             *  5. ​​​​​​​​​​​​​​​​Minskar ​​kapaciteten ​​när​​ element ​​tas ​​bort​​ ur​​ listan?
+             *  Nej, det gör det inte. Kapaciteten minskar inte någonsin.
+             *  
+             *  6.​​​​​​​​​​​​​​​​När​​ är​​ det ​​då​​ fördelaktigt ​​att ​​använda ​​en​​ egendefinierad ​​​array​​​ istället ​​för​​ en​​ lista?
+             *  När vi behöver ta bort element ur listan mer än att lägga till.
+             *  När det är viktig att ha fri kapaciteten på minnet.
+             *  När vi vet bättre att hur mycket kapaciteten behöver att öka.
+             */
+
+
             List<string> theList = new List<string>();
             do
             {
