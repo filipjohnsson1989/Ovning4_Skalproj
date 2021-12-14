@@ -95,6 +95,7 @@ namespace SkalProj_Datastrukturer_Minne
                 if (nav != '+' && nav != '-')
                     break;
 
+                // ToDo: Fixa acceptabel tom sträng
                 string value = input.Substring(1);
 
                 switch (nav)
