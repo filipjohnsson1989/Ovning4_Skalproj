@@ -10,55 +10,48 @@ namespace SkalProj_Datastrukturer_Minne
         /// <param name="args"></param>
         static void Main()
         {
-
-            while (true)
+            do
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                // Huvudmeny
+                ShowMainMenu();
+                GetUserInput();
+            } while (true);
+        }
+        private static void ShowMainMenu()
+        {
+            UI.Clear();
+            UI.AddMessage("Please navigate through the menu by inputting the number genom NumPad \n(1, 2, 3 ,4, 5, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
                     + "\n5. Reverse a text"
                     + "\n0. Exit the application");
-                char input = ' '; //Creates the character input to be used with the switch-case below.
-                try
+        }
+
+        private static void GetUserInput()
+        {
+            var keyPressed = UI.GetKey();//Creates the Key input to be used with the switch-case below.
+
+            var actionMeny = new Dictionary<ConsoleKey, Action>()
                 {
-                    input = Console.ReadLine()![0]; //Tries to set input to the first char in an input line
-                }
-                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
-                {
-                    Console.Clear();
-                    Console.WriteLine("Please enter some input!");
-                }
-                switch (input)
-                {
-                    case '1':
-                        ExamineList();
-                        break;
-                    case '2':
-                        ExamineQueue();
-                        break;
-                    case '3':
-                        ExamineStack();
-                        break;
-                    case '4':
-                        CheckParanthesis();
-                        break;
-                    case '5':
-                        ReverseText();
-                        break;
-                    /*
-                     * Extend the menu to include the recursive 
-                     * and iterative exercises.
-                     */
-                    case '0':
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5)");
-                        break;
-                }
-            }
+                    {ConsoleKey.NumPad1,ExamineList },
+                    {ConsoleKey.NumPad2,ExamineQueue },
+                    {ConsoleKey.NumPad3,ExamineStack },
+                    {ConsoleKey.NumPad4,CheckParanthesis },
+                    {ConsoleKey.NumPad5,ReverseText },
+                    {ConsoleKey.NumPad0,ClosePrograme },
+                };
+
+            if (actionMeny.ContainsKey(keyPressed))
+                actionMeny[keyPressed]?.Invoke();
+
+        }
+
+        static void ClosePrograme()
+        {
+            UI.AddMessage("Stängs");
+            Environment.Exit(0);
         }
 
         /// <summary>
@@ -104,16 +97,20 @@ namespace SkalProj_Datastrukturer_Minne
              *  När vi vet bättre att hur mycket kapaciteten behöver att öka.
              */
 
+            UI.Clear();
 
             List<string> theList = new();
             do
             {
+                UI.AddMessage("+ För att lägga till, - För att ta bort. Tomt att gå till backa till huvudmeny");
+
                 string? input = Console.ReadLine();
                 ArgumentNullException.ThrowIfNull(input);
 
-                char nav = input[0];
-                if (nav != '+' && nav != '-')
+                if (string.IsNullOrEmpty(input))
                     break;
+
+                char nav = input[0];
 
                 // ToDo: Fixa acceptabel tom sträng
                 string value = input.Substring(1);
@@ -129,11 +126,15 @@ namespace SkalProj_Datastrukturer_Minne
                     default:
                         break;
                 }
+                UI.Clear();
 
-                Console.WriteLine($"Listans storlek: {theList.Count}");
-                Console.WriteLine($"Underliggande arrays kapacitet: {theList.Capacity}");
+                UI.AddMessage($"Listans storlek: {theList.Count}");
+                UI.AddMessage($"Underliggande arrays kapacitet: {theList.Capacity}");
+                UI.AddMessage($"Elementer i listen: {String.Join(",", theList)}");
+
             } while (true);
         }
+
 
         /// <summary>
         /// Examines the datastructure Queue
@@ -146,15 +147,20 @@ namespace SkalProj_Datastrukturer_Minne
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
 
+            UI.Clear();
+
             Queue<string> customersQueue = new();
             do
             {
+                UI.AddMessage("+ För att lägga till, - För att ta bort. Tomt att gå till backa till huvudmeny");
+
                 string? input = Console.ReadLine();
                 ArgumentNullException.ThrowIfNull(input);
 
-                char nav = input[0];
-                if (nav != '+' && nav != '-')
+                if (string.IsNullOrEmpty(input))
                     break;
+
+                char nav = input[0];
 
                 switch (nav)
                 {
@@ -165,14 +171,16 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '-':
                         // ToDo: Fixa exception om att ​ta​​ bort ​​element ur​​ kö​​ (​dequeue)​ när kön är tomt.
-                        customersQueue.Dequeue();
+                        if (customersQueue.Count > 0)
+                            customersQueue.Dequeue();
                         break;
                     default:
                         break;
                 }
+                UI.Clear();
 
-                Console.WriteLine($"Nummer av kunder i ICA-kön: {customersQueue.Count}");
-                Console.WriteLine($"Kunder i ICA-kön: {String.Join(",", customersQueue)}");
+                UI.AddMessage($"Nummer av kunder i ICA-kön: {customersQueue.Count}");
+                UI.AddMessage($"Kunder i ICA-kön: {String.Join(",", customersQueue)}");
             } while (true);
 
         }
@@ -194,16 +202,20 @@ namespace SkalProj_Datastrukturer_Minne
              * Eftersom det inte är rättvist.
              */
 
-            Stack<string> inputStack = new();
+            UI.Clear();
 
+            Stack<string> inputStack = new();
             do
             {
+                UI.AddMessage("+ För att lägga till, - För att ta bort. Tomt att gå till backa till huvudmeny");
+
                 string? input = Console.ReadLine();
                 ArgumentNullException.ThrowIfNull(input);
 
-                char nav = input[0];
-                if (nav != '+' && nav != '-')
+                if (string.IsNullOrEmpty(input))
                     break;
+
+                char nav = input[0];
 
                 switch (nav)
                 {
@@ -214,14 +226,16 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '-':
                         // ToDo: Fixa exception om att ​ta​​ bort ​​element ur​​ kö​​ (​dequeue)​ när kön är tomt.
-                        inputStack.Pop();
+                        if (inputStack.Count > 0)
+                            inputStack.Pop();
                         break;
                     default:
                         break;
                 }
+                UI.Clear();
 
-                Console.WriteLine($"Nummer av elementer i stacken: {inputStack.Count}");
-                Console.WriteLine($"Elementer i stacken: {String.Join(",", inputStack)}");
+                UI.AddMessage($"Nummer av elementer i stacken: {inputStack.Count}");
+                UI.AddMessage($"Elementer i stacken: {String.Join(",", inputStack)}");
             } while (true);
 
 
@@ -239,56 +253,71 @@ namespace SkalProj_Datastrukturer_Minne
             Stack<char> inputStack = new();
             char[] openings = new char[] { '(', '[', '{', '<' };
             char[] closings = new char[] { ')', ']', '}', '>' };
-            bool itIsValid = true;
 
-            string? input = Console.ReadLine();
-            ArgumentNullException.ThrowIfNull(input);
-
-            foreach (char character in input.ToCharArray())
+            UI.Clear();
+            do
             {
-                int relevantCharIndex = -1;
-                bool? isItOpening = null;
+                bool itIsValid = true;
 
-                relevantCharIndex = Array.IndexOf(openings, character);
+                UI.AddMessage("Ange en sträng för att kontrollera om parenteserna i strängen är korrekta eller felaktiga.");
+                UI.AddMessage("Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };");
+                UI.AddMessage("Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );");
+                UI.AddMessage("Tomt att gå till backa till huvudmeny");
 
-                if (relevantCharIndex != -1)
+
+                string? input = Console.ReadLine();
+                ArgumentNullException.ThrowIfNull(input);
+
+                if (string.IsNullOrEmpty(input))
+                    break;
+
+                foreach (char character in input.ToCharArray())
                 {
-                    isItOpening = true;
-                }
-                else
-                {
-                    relevantCharIndex = Array.IndexOf(closings, character);
+                    int relevantCharIndex = -1;
+                    bool? isItOpening = null;
+
+                    relevantCharIndex = Array.IndexOf(openings, character);
+
                     if (relevantCharIndex != -1)
-                        isItOpening = false;
-                }
-
-                if (isItOpening is not null)
-                {
-                    if (isItOpening.Value) inputStack.Push(character);
+                    {
+                        isItOpening = true;
+                    }
                     else
                     {
-                        if (inputStack.Count == 0)
-                        {
-                            itIsValid = false;
-                            break;
-                        }
-                        char lastRelevantChar = inputStack.Pop();
+                        relevantCharIndex = Array.IndexOf(closings, character);
+                        if (relevantCharIndex != -1)
+                            isItOpening = false;
+                    }
 
-                        if (openings[relevantCharIndex] != lastRelevantChar)
+                    if (isItOpening is not null)
+                    {
+                        if (isItOpening.Value) inputStack.Push(character);
+                        else
                         {
-                            itIsValid = false;
-                            break;
-                        }
+                            if (inputStack.Count == 0)
+                            {
+                                itIsValid = false;
+                                break;
+                            }
+                            char lastRelevantChar = inputStack.Pop();
 
+                            if (openings[relevantCharIndex] != lastRelevantChar)
+                            {
+                                itIsValid = false;
+                                break;
+                            }
+
+                        }
                     }
                 }
-            }
 
-            if (inputStack.Count != 0)
-                itIsValid = false;
+                if (inputStack.Count != 0)
+                    itIsValid = false;
 
 
-            Console.WriteLine(itIsValid ? "Valid" : "Invalid");
+                UI.AddMessage(itIsValid ? "Valid" : "Invalid");
+            } while (true);
+
         }
 
 
@@ -297,6 +326,10 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ReverseText()
         {
+            UI.Clear();
+
+            UI.AddMessage("Skriv in en text för att vända texten");
+
             Stack<char> inputStack = new();
             string result = "";
 
@@ -311,7 +344,8 @@ namespace SkalProj_Datastrukturer_Minne
 
             GC.Collect();
 
-            Console.WriteLine($"Reversed text: {result}");
+            UI.AddMessage($"Reversed text: {result}");
+            UI.GetKey();
         }
 
     }
